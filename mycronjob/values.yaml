@@ -1,0 +1,8 @@
+cronjob:
+  name: mycronjob
+  label: mycron
+  schedule: "*/5 * * * *"
+  image: busybox
+  countTo: 100
+  sleepTime: 2
+  restartPolicy: OnFailure

@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Values.cronjob.name }}
+  labels:
+    app: {{ .Values.cronjob.label }}
+spec:
+  schedule: "{{ .Values.cronjob.schedule }}"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: counter
+              image: "{{ .Values.cronjob.image }}"
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  for i in $(seq 1 {{ .Values.cronjob.countTo }}); do
+                    echo "Count: $i"
+                    sleep {{ .Values.cronjob.sleepTime }}
+                  done
+          restartPolicy: {{ .Values.cronjob.restartPolicy }}
